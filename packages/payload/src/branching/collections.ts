@@ -1,23 +1,17 @@
 import type { CollectionConfig } from '../collections/config/types.js'
-
 import type { Config } from '../config/types.js'
-
 import type { CollectionAfterChangeHook, CollectionBeforeDeleteHook, Where } from '../index.js'
-
 import type { SanitizedBranchingConfig } from './types.js'
 
 import { defaultAccess } from '../auth/defaultAccess.js'
-
 import { APIError } from '../errors/index.js'
-
+import { wrapInternalEndpoints } from '../utilities/wrapInternalEndpoints.js'
 import { assertBranchCreatedDocumentsUnreferenced } from './assertBranchCreatedDocumentsUnreferenced.js'
-
 import { combineBranchAccess } from './combineBranchAccess.js'
-
 import { discardBranchChangesBeforeBranchDeletion } from './discard.js'
-
+import { discardBranchHandler } from './endpoints/discard.js'
+import { mergeBranchHandler } from './endpoints/merge.js'
 import { loadBranchRow, setBranchRow } from './resolveBranch.js'
-
 import {
   branchChangesCollectionSlug,
   branchesCollectionSlug,
@@ -136,6 +130,20 @@ export const getBranchesCollection = (branching: SanitizedBranchingConfig): Coll
   hooks: {
     beforeDelete: [deleteBranchStateBeforeDelete],
   },
+  // Wrapped so the POST body is parsed onto `req.data`, as with every other
+  // built-in endpoint.
+  endpoints: wrapInternalEndpoints([
+    {
+      handler: mergeBranchHandler,
+      method: 'post',
+      path: '/:id/merge',
+    },
+    {
+      handler: discardBranchHandler,
+      method: 'post',
+      path: '/:id/discard',
+    },
+  ]),
   // `slug` is immutable after creation: `_branch` stores the slug rather than
   // a foreign key, so renaming it would orphan every shadow row.
   lockDocuments: false,
