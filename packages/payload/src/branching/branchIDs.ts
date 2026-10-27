@@ -1,9 +1,7 @@
 import type { PayloadRequest, Where, WhereField } from '../types/index.js'
 
 import { extractRelationshipID } from '../utilities/extractRelationshipID.js'
-
 import { isBranchProjectionActive } from './branchSelect.js'
-
 import { branchDocIDField, branchParentField } from './types.js'
 
 /**
