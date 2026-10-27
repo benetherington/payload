@@ -1,9 +1,7 @@
 import type { PayloadRequest } from '../types/index.js'
 
 import { APIError } from '../errors/index.js'
-
 import { resolveBranch } from './resolveBranch.js'
-
 import { MAIN_BRANCH } from './types.js'
 
 export type BranchMergeWrite = {
@@ -16,7 +14,6 @@ export type BranchMergeWrite = {
 export type BranchMergeWriteGuard = (write: BranchMergeWrite) => Promise<void>
 
 export const branchMergeValidationContextKey = Symbol('branchMergeValidation')
-
 export const branchMergeWriteGuardContextKey = Symbol('branchMergeWriteGuard')
 
 /** Prevents content writes made through a branch merge validation request. */
