@@ -2232,6 +2232,7 @@ export { assertBranchUpdateAccess } from './branching/assertBranchUpdateAccess.j
 export { projectBranchIDs } from './branching/branchIDs.js'
 export { isBranchProjectionActive } from './branching/branchSelect.js'
 export type { EffectiveOperation } from './branching/effectiveOperations.js'
+export { recordBranchGlobalChange } from './branching/globals.js'
 export type { MergeResult } from './branching/merge.js'
 export type { BlockedChange } from './branching/preflight.js'
 export { loadBranchDeletions } from './branching/resolveBranch.js'
