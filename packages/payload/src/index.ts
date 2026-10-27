@@ -1,3 +1,5 @@
+import type { DiscardOptions } from './branching/discard.js'
+import { discardBranchChanges } from './branching/discard.js'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ExecutionResult, GraphQLSchema, ValidationRule } from 'graphql'
 import type { Request as graphQLRequest, OperationArgs } from 'graphql-http'
@@ -500,6 +502,8 @@ let checkedDependencies = false
  * @description Payload
  */
 export class BasePayload {
+  branches = { discard: (options: DiscardOptions) => discardBranchChanges(this, options) }
+
   /**
    * @description Authorization and Authentication using headers and cookies to run auth user strategies
    * @returns permissions: Permissions
@@ -2236,6 +2240,10 @@ export { assertBranchActionAccess } from './branching/assertBranchActionAccess.j
 export { assertBranchUpdateAccess } from './branching/assertBranchUpdateAccess.js'
 export { projectBranchIDs } from './branching/branchIDs.js'
 export { isBranchProjectionActive } from './branching/branchSelect.js'
+export type { DiscardedChange } from './branching/discard.js'
+export type { DiscardOptions } from './branching/discard.js'
+export type { DiscardResult } from './branching/discard.js'
+export { discardBranchChanges } from './branching/discard.js'
 export type { EffectiveOperation } from './branching/effectiveOperations.js'
 export { recordBranchGlobalChange } from './branching/globals.js'
 export type { MergeResult } from './branching/merge.js'
